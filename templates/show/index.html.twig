@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<div class="container">  
+    <h1 class="title p-1">{{ article.title }}</h1>
+    <div class="img-fluid">
+        <img width="100%" src="{{ article.image }}" alt="{{ article.image }}">
+    </div>
+    <div class="content">
+        <p class="date">{{ article.createdAt|date('d/m/Y') }} à {{ article.createdAt|date('H:i') }}</p>
+        <h2 class="title p-1">{{ article.title }}</h2>
+        <p class="content" style="text-align:justify;">{{ article.content }}</p>
+    </div>
+</div>
+
+{% endblock %}
