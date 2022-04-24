@@ -14,8 +14,11 @@
     <div class="row justify-content-center">
         {% for article in articles %}        
             <div class="card col-md-5 m-1">
-                <p class="date">{{ article.createdAt|date('d/m/Y') }} à {{ article.createdAt|date('H:i') }}</p>
-                <img class="card-img-top" src="{{ article.image }}" alt="{{ article.image }}">
+                <p class="date">
+                    {{ article.createdAt|date('d/m/Y') }} à {{ article.createdAt|date('H:i') }}
+                    par <span class="author">{{ article.author }}</span>
+                </p>
+                <img class="card-img-top" src="/assets/blog/images/{{ article.image }}" alt="{{ article.image }}">
                 <div class="card-body">
                     <h5 class="card-title">{{ article.title }}</h5>
                     <a href="{{ path('show', {'id': article.id }) }}" class="btn btn-primary">Go somewhere</a>

@@ -6,9 +6,11 @@ use App\Entity\User;
 use App\Entity\Article;
 use App\Entity\Category;
 use Symfony\Component\HttpFoundation\Response;
+use App\Controller\Admin\ArticleCrudController;
 use Symfony\Component\Routing\Annotation\Route;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
+use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 
 class DashboardController extends AbstractDashboardController
@@ -18,7 +20,10 @@ class DashboardController extends AbstractDashboardController
      */
     public function index(): Response
     {
-        return parent::index();
+        // redirect to some CRUD controller
+        $routeBuilder = $this->get(AdminUrlGenerator::class);
+        return $this->redirect($routeBuilder->setController(ArticleCrudController::class)->generateUrl());
+
     }
 
     public function configureDashboard(): Dashboard
@@ -33,6 +38,5 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Category', 'fa fa-list', Category::class);
         yield MenuItem::linkToCrud('Articles', 'fa fa-newspaper', Article::class);
         yield MenuItem::linkToCrud('Users', 'fa fa-users', User::class);
-        // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
     }
 }
