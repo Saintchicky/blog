@@ -1,30 +1,39 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
+{% block title %}Les articles{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-
-    <h1>Bienvenue sur la page d'accueil</h1>
-    <div class="row justify-content-center">
-        {% for article in articles %}        
-            <div class="card col-md-5 m-1">
-                <p class="date">
-                    {{ article.createdAt|date('d/m/Y') }} à {{ article.createdAt|date('H:i') }}
-                    par <span class="author">{{ article.author }}</span>
-                </p>
-                <img class="card-img-top" src="/assets/blog/images/{{ article.image }}" alt="{{ article.image }}">
-                <div class="card-body">
-                    <h5 class="card-title">{{ article.title }}</h5>
-                    <a href="{{ path('show', {'id': article.id }) }}" class="btn btn-primary">Go somewhere</a>
-                </div>
-            </div>
-        {% endfor %}
+<h1>Bienvenue sur la page d'accueil</h1>
+<div class="row">
+    <div class="col-8">
+        <div class="row justify-content-center">
+            {% for article in articles %} 
+                <div class="card m-1" style="width: 40%;">
+                    <p class="date">
+                        {{ article.createdAt|date('d/m/Y') }} à {{ article.createdAt|date('H:i') }}
+                        par <span class="author">{{ article.author }}</span>
+                    </p>
+                    <img class="img-fluid" src="/assets/blog/images/{{ article.image }}" alt="{{ article.image }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ article.title }}</h5>
+                        <a href="{{ path('show', {'id': article.id }) }}" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                </div> 
+            {% endfor %}
+        </div>
+    </div>   
+    <div class="col-4">
+        <ul class="list-group">
+            {% for category in categories %}
+                <li class="list-group-item d-flex justify-content-between">
+                    <a href="{{ path('category', {'id': category.id }) }}">{{ category.title }}</a>  
+                    <span class="btn btn-primary" style="width: 27%;">
+                        <span class="badge badge-light" style="background:#fff;color:#000;">{{ category.articles|length }}</span> article{% if category.articles|length > 1 %}s{% endif %} 
+                    </span>
+                </li>
+            {% endfor %}
+        </ul>
     </div>
 </div>
 {% endblock %}
