@@ -53,7 +53,7 @@ class HomeController extends AbstractController
     /**
      * @Route("/category/{id}", name="category")
      */
-    public function showArticlesByCategory(Category $categorie): Response
+    public function showArticlesByCategory(?Category $categorie): Response
     {
         if (!$categorie) {
             return $this->redirectToRoute('home');

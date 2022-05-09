@@ -2,10 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\UserRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\UserRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -26,16 +28,19 @@ class User
     private $username;
 
     /**
+     * @Assert\Length(min=3, max=50)
      * @ORM\Column(type="string", length=255)
      */
     private $firstname;
 
     /**
+     * @Assert\Email(message="L'email n'est pas valide")
      * @ORM\Column(type="string", length=255)
      */
     private $email;
 
     /**
+     * @Assert\Length(min=4, max=50)
      * @ORM\Column(type="string", length=255)
      */
     private $password;
@@ -54,6 +59,10 @@ class User
      * @ORM\Column(type="string", length=255)
      */
     private $lastname;
+    /**
+     * @Assert\EqualTo(propertyPath="password", message="les deux mots de passe doivent être identique")
+     */
+    private $passwordConfirm;
 
     public function __construct()
     {
@@ -169,6 +178,18 @@ class User
     public function setLastname(string $lastname): self
     {
         $this->lastname = $lastname;
+
+        return $this;
+    }
+
+    public function getPasswordConfirm(): ?string
+    {
+        return $this->passwordConfirm;
+    }
+
+    public function setPasswordConfirm(string $passwordConfirm): self
+    {
+        $this->passwordConfirm = $passwordConfirm;
 
         return $this;
     }
