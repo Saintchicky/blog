@@ -3,17 +3,25 @@
 namespace App\Entity;
 
 
-use Symfony\Component\Validator\Constraints as Assert;
+use App\Entity\Article;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\Table(name="`user`")
+ * @UniqueEntity(
+ * fields={"email"},
+ * message="L'email tapé n'est pas disponible"
+ * )
  */
-class User
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     /**
      * @ORM\Id
@@ -193,4 +201,10 @@ class User
 
         return $this;
     }
+    public function getRoles() 
+    {
+        return ['ROLE_USER'];
+    }
+    public function getSalt(){}
+    public function eraseCredentials(){}
 }

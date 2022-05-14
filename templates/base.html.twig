@@ -27,7 +27,12 @@
                         </li>
                     </ul>
                 </div>
-                <a href="{{ path('security_register') }}" class="btn btn-success">Inscription</a>
+                {% if app.user %}
+                    <a href="{{ path('security_logout') }}" class="btn btn-success">Deconnexion</a>
+                {% else %}
+                    <a href="{{ path('security_register') }}" class="btn btn-success">Inscription</a>
+                    <a href="{{ path('security_login') }}" class="btn btn-success" style="margin-left:1em;">Connexion</a>
+                {% endif %}
             </nav>
         </header>
         <div class="container-fluid">
